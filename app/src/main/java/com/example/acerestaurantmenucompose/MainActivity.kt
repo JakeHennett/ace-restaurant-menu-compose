@@ -32,14 +32,29 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Column() {
-                        TitleLine()
-                        MainMenuItem("Menu")
-                    }
+                    MainMenu()
                     //PlayWithFormatting("Android")
                 }
             }
         }
+    }
+}
+
+@Composable
+fun MainMenu()
+{
+    Box(
+        modifier = Modifier
+            //.size(400.dp)
+            //.fillMaxHeight()
+    ) {
+        Row() {
+            Text(
+                text = "Ace Restaurant",
+                //modifier = Modifier.align(Alignment.TopCenter)
+            )
+        }
+        MainMenuItem("Menu")
     }
 }
 
@@ -117,7 +132,8 @@ fun PlayWithFormatting(name: String) {
 @Composable
 fun DefaultPreview() {
     AceRestaurantMenuComposeTheme {
-        MainMenuItem("Menu")
+        MainMenu()
+        //MainMenuItem("Menu")
         //PlayWithFormatting("Moto")
     }
 }
