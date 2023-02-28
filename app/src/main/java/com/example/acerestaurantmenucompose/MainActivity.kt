@@ -62,6 +62,6 @@ fun PlayWithFormatting(name: String) {
 @Composable
 fun DefaultPreview() {
     AceRestaurantMenuComposeTheme {
-        Greeting("Moto")
+        PlayWithFormatting("Moto")
     }
 }
