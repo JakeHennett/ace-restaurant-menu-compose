@@ -32,11 +32,26 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainMenuItem("Menu")
+                    Column() {
+                        TitleLine()
+                        MainMenuItem("Menu")
+                    }
                     //PlayWithFormatting("Android")
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TitleLine()
+{
+    Row(
+        //modifier = Modifier.align(Alignment.Center)
+    ){
+        Text(
+            text = "Ace Restaurant"
+        )
     }
 }
 
