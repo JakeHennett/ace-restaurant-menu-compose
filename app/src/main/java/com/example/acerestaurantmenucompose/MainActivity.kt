@@ -41,8 +41,8 @@ fun Greeting(name: String) {
         text = "Hello $name!",
         fontSize = 30.sp,
         modifier = Modifier
+            .background(color = androidx.compose.ui.graphics.Color.Blue)
             .padding(16.dp)
-            //.background(Color.Red)
     )
 }
 
