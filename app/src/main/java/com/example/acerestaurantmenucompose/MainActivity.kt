@@ -11,6 +11,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +32,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    PlayWithFormatting("Android")
+                    MainMenuItem("Menu")
+                    //PlayWithFormatting("Android")
                 }
             }
         }
@@ -42,8 +44,26 @@ class MainActivity : ComponentActivity() {
 fun MainMenuItem(name: String)
 {
     //TODO: create a class and pass that object as input parameter
-    Row(){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+    ){
+        Column(
+            //modifier = Modifier.align(Alignment.Start)
+        ) {
+            Text(
+                text = "$name",
+                modifier = Modifier.align(Alignment.Start)
+            )
+        }
+        Column() {
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowRight,
+                contentDescription = null,
+                modifier = Modifier.align(Alignment.End)
+            )
 
+        }
     }
 }
 
@@ -82,6 +102,7 @@ fun PlayWithFormatting(name: String) {
 @Composable
 fun DefaultPreview() {
     AceRestaurantMenuComposeTheme {
-        PlayWithFormatting("Moto")
+        MainMenuItem("Menu")
+        //PlayWithFormatting("Moto")
     }
 }
