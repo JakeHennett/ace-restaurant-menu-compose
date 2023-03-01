@@ -53,11 +53,13 @@ fun MainMenu()
                 text = "Ace Restaurant",
                 modifier = Modifier
                     .align(Alignment.TopCenter)
+                    //.padding(20.dp)
             )
         //MenuListLazy()
         //MainMenuItem("Menu")
         //TODO: Replace the hard coded items with JSON
         var menuItems = ArrayList<String>()
+        PopulateMenuItems(menuItems)
         menuItems.add("Menu")
         menuItems.add("Online Ordering")
         menuItems.add("Calorie Counter")
@@ -169,4 +171,9 @@ fun DefaultPreview() {
         //MainMenuItem("Menu")
         //PlayWithFormatting("Moto")
     }
+}
+
+fun PopulateMenuItems(arrayList: ArrayList<String>)
+{
+    
 }
