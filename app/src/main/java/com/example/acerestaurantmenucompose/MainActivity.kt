@@ -156,5 +156,5 @@ fun PopulateMenuItems(arrayList: ArrayList<String>)
 
 fun menuItemClicked(name: String, context: Context)
 {
-    Toast.makeText(context, "$name", Toast.LENGTH_LONG)
+    Toast.makeText(context, "$name", Toast.LENGTH_LONG).show()
 }
