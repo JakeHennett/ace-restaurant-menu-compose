@@ -49,52 +49,59 @@ fun MainMenu()
             //.size(400.dp)
             .fillMaxSize()
     ) {
-
-            Text(
+        Text(
                 text = "Ace Restaurant",
                 modifier = Modifier
                     .align(Alignment.TopCenter)
             )
-        LazyColumn(
-            modifier = Modifier.align(Alignment.Center)
-        ) {
-            // Add a single item
-            item {
-                Text(text = "First item")
-            }
-
-            // Add 5 items
-            items(5) { index ->
-                Text(text = "Item: $index")
-            }
-
-            // Add another single item
-            item {
-                Text(text = "Last item")
-            }
-        }
-        MainMenuItem("Menu")
+        //MenuListLazy()
+        //MainMenuItem("Menu")
+        var menuItems = ArrayList<String>()
+        menuItems.add("Menu")
+        menuItems.add("Second")
+        menuItems.add("Third")
+        MenuList(menuItems)
     }
 }
 
-/*
+@Composable
+fun MenuListLazy()
+{
+    LazyColumn {
+        // Add a single item
+        item {
+            Text(text = "First item")
+        }
+
+        // Add 5 items
+        items(5) { index ->
+            Text(text = "Item: $index")
+        }
+
+        // Add another single item
+        item {
+            Text(text = "Last item")
+        }
+    }
+}
+
+
 @Composable
 fun MenuList(messages: List<String>) {
     Column {
-        messages.forEach { message ->
-            MessageRow(message)
+        messages.forEach {
+                message ->
+            Text(text = "$message")
         }
     }
 }
 
- */
+
 
 @Composable
 fun TitleLine()
 {
-    Row(
-        //modifier = Modifier.align(Alignment.Center)
-    ){
+    Row {
         Text(
             text = "Ace Restaurant"
         )
@@ -109,15 +116,13 @@ fun MainMenuItem(name: String)
         modifier = Modifier
             .fillMaxWidth()
     ){
-        Column(
-            //modifier = Modifier.align(Alignment.Start)
-        ) {
+        Column {
             Text(
                 text = "$name",
                 modifier = Modifier.align(Alignment.Start)
             )
         }
-        Column() {
+        Column {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowRight,
                 contentDescription = null,
@@ -138,9 +143,9 @@ fun PlayWithFormatting(name: String) {
         Text(
             text = "Hello $name!",
             fontSize = 30.sp,
-            color = androidx.compose.ui.graphics.Color.Cyan,
+            color = Color.Cyan,
             modifier = Modifier
-                .background(color = androidx.compose.ui.graphics.Color.Blue)
+                .background(color = Color.Blue)
                 .padding(16.dp)
         )
         Icon(
