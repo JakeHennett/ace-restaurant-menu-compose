@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -93,7 +94,13 @@ fun MainMenuItem(name: String)
             .background(Color.LightGray)
             .border(1.dp, Color.Black)
     ){
-        Column {
+        Column (
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .width(330.dp)
+            //TODO: replace explicit width with something dynamic
+                //.fillMaxWidth()
+                ){
             Text(
                 text = "$name",
                 modifier = Modifier
