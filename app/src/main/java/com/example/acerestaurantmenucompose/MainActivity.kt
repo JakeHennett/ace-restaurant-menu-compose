@@ -56,10 +56,17 @@ fun MainMenu()
             )
         //MenuListLazy()
         //MainMenuItem("Menu")
+        //TODO: Replace the hard coded items with JSON
         var menuItems = ArrayList<String>()
         menuItems.add("Menu")
-        menuItems.add("Second")
-        menuItems.add("Third")
+        menuItems.add("Online Ordering")
+        menuItems.add("Calorie Counter")
+        menuItems.add("Catering")
+        menuItems.add("Beverage Mixer")
+        menuItems.add("Reservations")
+        menuItems.add("Get Directions")
+        menuItems.add("About Us")
+        menuItems.add("Contact Us")
         MenuList(menuItems)
     }
 }
@@ -91,20 +98,9 @@ fun MenuList(messages: List<String>) {
     Column {
         messages.forEach {
                 message ->
-            Text(text = "$message")
+            //Text(text = "$message")
+            MainMenuItem("$message")
         }
-    }
-}
-
-
-
-@Composable
-fun TitleLine()
-{
-    Row {
-        Text(
-            text = "Ace Restaurant"
-        )
     }
 }
 
@@ -115,6 +111,7 @@ fun MainMenuItem(name: String)
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(10.dp)
     ){
         Column {
             Text(
