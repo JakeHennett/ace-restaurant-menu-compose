@@ -60,40 +60,9 @@ fun MainMenu()
         //TODO: Replace the hard coded items with JSON
         var menuItems = ArrayList<String>()
         PopulateMenuItems(menuItems)
-        menuItems.add("Menu")
-        menuItems.add("Online Ordering")
-        menuItems.add("Calorie Counter")
-        menuItems.add("Catering")
-        menuItems.add("Beverage Mixer")
-        menuItems.add("Reservations")
-        menuItems.add("Get Directions")
-        menuItems.add("About Us")
-        menuItems.add("Contact Us")
         MenuList(menuItems)
     }
 }
-
-@Composable
-fun MenuListLazy()
-{
-    LazyColumn {
-        // Add a single item
-        item {
-            Text(text = "First item")
-        }
-
-        // Add 5 items
-        items(5) { index ->
-            Text(text = "Item: $index")
-        }
-
-        // Add another single item
-        item {
-            Text(text = "Last item")
-        }
-    }
-}
-
 
 @Composable
 fun MenuList(messages: List<String>) {
@@ -109,7 +78,6 @@ fun MenuList(messages: List<String>) {
 @Composable
 fun MainMenuItem(name: String)
 {
-    //TODO: create a class and pass that object as input parameter
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -132,48 +100,24 @@ fun MainMenuItem(name: String)
     }
 }
 
-@Composable
-fun PlayWithFormatting(name: String) {
-    Box(
-        modifier = Modifier
-            .size(400.dp)
-            //.background(androidx.compose.ui.graphics.Color.Gray)
-    ) {
-        Text(
-            text = "Hello $name!",
-            fontSize = 30.sp,
-            color = Color.Cyan,
-            modifier = Modifier
-                .background(color = Color.Blue)
-                .padding(16.dp)
-        )
-        Icon(
-            imageVector = Icons.Default.Add,
-            contentDescription = null,
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(500.dp)
-        )
-        Text(
-            text = "Bottom Right Button",
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-        )
-
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     AceRestaurantMenuComposeTheme {
         MainMenu()
-        //MainMenuItem("Menu")
-        //PlayWithFormatting("Moto")
     }
 }
 
 fun PopulateMenuItems(arrayList: ArrayList<String>)
 {
-    
+    //TODO: use this subroutine to fetch JSON from gist
+    arrayList.add("Menu")
+    arrayList.add("Online Ordering")
+    arrayList.add("Calorie Counter")
+    arrayList.add("Catering")
+    arrayList.add("Beverage Mixer")
+    arrayList.add("Reservations")
+    arrayList.add("Get Directions")
+    arrayList.add("About Us")
+    arrayList.add("Contact Us")
 }
