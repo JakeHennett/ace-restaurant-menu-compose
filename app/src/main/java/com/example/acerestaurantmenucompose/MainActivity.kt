@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -46,17 +47,47 @@ fun MainMenu()
     Box(
         modifier = Modifier
             //.size(400.dp)
-            //.fillMaxHeight()
+            .fillMaxSize()
     ) {
-        Row() {
+
             Text(
                 text = "Ace Restaurant",
-                //modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
             )
+        LazyColumn(
+            modifier = Modifier.align(Alignment.Center)
+        ) {
+            // Add a single item
+            item {
+                Text(text = "First item")
+            }
+
+            // Add 5 items
+            items(5) { index ->
+                Text(text = "Item: $index")
+            }
+
+            // Add another single item
+            item {
+                Text(text = "Last item")
+            }
         }
         MainMenuItem("Menu")
     }
 }
+
+/*
+@Composable
+fun MenuList(messages: List<String>) {
+    Column {
+        messages.forEach { message ->
+            MessageRow(message)
+        }
+    }
+}
+
+ */
 
 @Composable
 fun TitleLine()
