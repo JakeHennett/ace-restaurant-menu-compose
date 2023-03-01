@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
@@ -89,18 +90,27 @@ fun MainMenuItem(name: String)
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp)
+            .background(Color.LightGray)
+            .border(1.dp, Color.Black)
     ){
         Column {
             Text(
                 text = "$name",
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(5.dp)
+                    //.fillMaxSize()
+                    //.fillMaxWidth()
+            //TODO: Find a way to right adjust the >
             )
         }
         Column {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowRight,
                 contentDescription = null,
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(5.dp)
             )
 
         }
