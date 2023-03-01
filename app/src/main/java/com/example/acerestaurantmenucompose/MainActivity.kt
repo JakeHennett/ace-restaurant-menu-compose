@@ -44,23 +44,30 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainMenu()
 {
-    Box(
+    Column(
         modifier = Modifier
-            //.size(400.dp)
             .fillMaxSize()
-    ) {
-        Text(
+    )
+    {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
                 text = "Ace Restaurant",
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    //.padding(20.dp)
+                //.padding(20.dp)
             )
-        //MenuListLazy()
-        //MainMenuItem("Menu")
-        //TODO: Replace the hard coded items with JSON
-        var menuItems = ArrayList<String>()
-        PopulateMenuItems(menuItems)
-        MenuList(menuItems)
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            var menuItems = ArrayList<String>()
+            PopulateMenuItems(menuItems)
+            MenuList(menuItems)
+        }
     }
 }
 
