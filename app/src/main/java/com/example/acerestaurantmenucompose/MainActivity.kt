@@ -1,5 +1,6 @@
 package com.example.acerestaurantmenucompose
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -89,6 +91,7 @@ fun MenuList(messages: List<String>) {
 @Composable
 fun MainMenuItem(name: String)
 {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -96,7 +99,7 @@ fun MainMenuItem(name: String)
             .background(Color.LightGray)
             .border(1.dp, Color.Black)
             .clickable {
-                menuItemClicked(name)
+                menuItemClicked(name, context)
             }
     ){
         Column (
@@ -151,7 +154,7 @@ fun PopulateMenuItems(arrayList: ArrayList<String>)
     arrayList.add("Contact Us")
 }
 
-fun menuItemClicked(name: String)
+fun menuItemClicked(name: String, context: Context)
 {
-    //Toast.makeText(LocalContext.current, "My toast")
+    Toast.makeText(context, "$name", Toast.LENGTH_LONG)
 }
