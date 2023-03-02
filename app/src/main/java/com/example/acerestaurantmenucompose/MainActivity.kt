@@ -48,6 +48,7 @@ fun MainMenu()
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = Color.Magenta)
     )
     {
         Box(
