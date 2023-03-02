@@ -72,8 +72,55 @@ fun CalorieCounterScreen() {
                 .fillMaxWidth()
         ) {
             //MenuList(menuItems)
+            AceItemCollapsed(oneItem = aceItems.get(0))
         }
     }
+}
+
+@Composable
+fun AceItemCollapsed(oneItem: AceItem) {
+    val context = LocalContext.current
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .background(Color.LightGray)
+            .border(1.dp, Color.Black)
+        //.clickable {menuItemClicked(name, context) }
+    ) {
+        Column(
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .width(330.dp)
+            //TODO: replace explicit width with something dynamic
+            //.fillMaxWidth()
+        ) {
+            Text(
+                text = "$oneItem.name",
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(5.dp)
+                //.fillMaxSize()
+                //.fillMaxWidth()
+                //TODO: Find a way to right adjust the >
+            )
+        }
+        Column {
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowRight,
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(5.dp)
+            )
+
+        }
+    }
+}
+
+@Composable
+fun AceItemExpanded(oneItem: AceItem) {
+
 }
 
 fun populateCategories(arrayList: ArrayList<String>) {
