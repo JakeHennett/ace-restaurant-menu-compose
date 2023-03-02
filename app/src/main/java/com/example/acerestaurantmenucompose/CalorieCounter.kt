@@ -43,8 +43,7 @@ class CalorieCounter : ComponentActivity() {
 }
 
 @Composable
-fun CalorieCounterScreen()
-{
+fun CalorieCounterScreen() {
     var categories = ArrayList<String>()
     populateCategories(categories)
 
@@ -60,7 +59,7 @@ fun CalorieCounterScreen()
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-        ){
+        ) {
             Text(
                 text = "Calorie Counter",
                 modifier = Modifier
@@ -71,14 +70,13 @@ fun CalorieCounterScreen()
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-        ){
+        ) {
             //MenuList(menuItems)
         }
     }
 }
 
-fun populateCategories(arrayList: ArrayList<String>)
-{
+fun populateCategories(arrayList: ArrayList<String>) {
     //TODO: use this subroutine to fetch JSON from gist
     arrayList.add("Appetizers")
     arrayList.add("Entrees")
@@ -94,15 +92,15 @@ fun CalorieCounterPreview() {
     }
 }
 
-fun populateAceItems(arrayList: ArrayList<AceItem>)
-{
+fun populateAceItems(arrayList: ArrayList<AceItem>) {
     arrayList.add(
-        AceItem("item name",
+        AceItem(
+            "item name",
             "appetizers",
             100,
-        "a link",
-        2.00,
-        "a description"
+            "a link",
+            2.00,
+            "a description"
         )
     )
 }
@@ -114,4 +112,4 @@ data class AceItem(
     val picture: String,
     val price: Double,
     val description: String
-    )
+)
