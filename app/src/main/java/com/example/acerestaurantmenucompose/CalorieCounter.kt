@@ -142,16 +142,26 @@ fun CalorieCounterPreview() {
 }
 
 fun populateAceItems(arrayList: ArrayList<AceItem>) {
-    arrayList.add(
-        AceItem(
-            "Mozzarella Sticks",
-            "Appetizers",
-            850,
-            "a link",
-            9.99,
-            "Six sticks, filled with gooey mozzarella cheese."
-        )
-    )
+    arrayList.add(AceItem("Mozzarella Sticks", "Appetizers", 850, "https://gist.github.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857?permalink_comment_id=4473116#gistcomment-4473116", 9.99, "Six sticks, filled with gooey mozzarella cheese."))
+    arrayList.add(AceItem("Spinach Dip", "Appetizers", 500, "", 8.99, "Spinach and artichoke dip, served with pita slices."))
+    arrayList.add(AceItem("Fried Pickles", "Appetizers", 550, "", 9.00, "Dill chips, battered and fried."))
+    arrayList.add(AceItem("Chips and Salsa", "Appetizers", 300, "", 6.50, "Salty tortilla chips and house-made tomato salsa."))
+    arrayList.add(AceItem("Buffalo Blasts", "Appetizers", 600, "", 10.99, "Spicy chicken in a fried skin. Served with blue cheese and buffalo sauce."))
+    arrayList.add(AceItem("Pepperoni Pizza", "Entrees", 900, "", 10.00, "Deep dish Detroit style pizza covered in pepperonis and cheese"))
+    arrayList.add(AceItem("Hamburger with Fries", "Entrees", 815, "", 8.50, "hamburger with lettuce, tomato, and pickles served with fries"))
+    arrayList.add(AceItem("Chicken sandwich with fries", "Entrees", 650, "", 7.50, "Crispy fried chicken sandwich served with fries"))
+    arrayList.add(AceItem("Steak and potatoes", "Entrees", 450, "", 10.25, "Steak served just the way you want it. This comes with a baked potato. "))
+    arrayList.add(AceItem("Grilled Tenders with fries", "Entrees", 250, "", 6.50, "marinated and grilled chicken tenders served with fries"))
+    arrayList.add(AceItem("French Fries", "Sides", 80, "", 2.00, "Thin cut fries, sprinkled with the signature Ace spice mix."))
+    arrayList.add(AceItem("Fruit Cup", "Sides", 50, "", 3.00, "seasonal fruit"))
+    arrayList.add(AceItem("Baked Potato", "Sides", 500, "", 3.50, "A gigantic Idaho spud, baked and filled with butter, sour cream, cheese, and bacon."))
+    arrayList.add(AceItem("Broccoli Casserole", "Sides", 300, "", 4.50, "Mama's original recipe. Cheesy in the best way."))
+    arrayList.add(AceItem("Onion Rings", "Sides", 350, "", 3.00, "Thick cut onion rings, battered and deep fried."))
+    arrayList.add(AceItem("Carrot Cake", "Desserts", 350, "", 5.00, "It sounds healthy, but it probably isn't."))
+    arrayList.add(AceItem("Fried Oreos", "Desserts", 700, "", 1.00, "Two Oreo cookies, battered and deep fried until golden brown and delicious."))
+    arrayList.add(AceItem("French Silk Pie", "Desserts", 900, "", 5.50, "Rich and creamy, but not made of silk nor is it from France."))
+    arrayList.add(AceItem("Ice Cream", "Desserts", 650, "", 3.00, "A heaping bowl of ice cream. Vanilla, chocolate, and strawberry available."))
+    arrayList.add(AceItem("Cheesecake", "Desserts", 800, "", 4.00, "A decadent slice of cheesecake, garnished with strawberry slices."))
 }
 
 data class AceItem(
