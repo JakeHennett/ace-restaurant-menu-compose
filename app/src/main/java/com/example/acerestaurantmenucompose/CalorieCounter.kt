@@ -2,6 +2,7 @@ package com.example.acerestaurantmenucompose
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,7 +15,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -91,7 +92,7 @@ fun AceItemCollapsed(oneItem: AceItem) {
         Column(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .width(330.dp)
+                .width(270.dp)
             //TODO: replace explicit width with something dynamic
             //.fillMaxWidth()
         ) {
@@ -108,13 +109,30 @@ fun AceItemCollapsed(oneItem: AceItem) {
         }
         Column {
             Icon(
-                imageVector = Icons.Default.KeyboardArrowRight,
+                //TODO: Replace with minus icon if available
+                imageVector = Icons.Default.Close,
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(5.dp)
             )
-
+        }
+        Column {
+            Text(
+                text = "0",
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(5.dp)
+            )
+        }
+        Column {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(5.dp)
+            )
         }
     }
 }
