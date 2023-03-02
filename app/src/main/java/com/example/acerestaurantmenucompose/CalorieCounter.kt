@@ -80,6 +80,7 @@ fun CalorieCounterScreen() {
 @Composable
 fun AceItemCollapsed(oneItem: AceItem) {
     val context = LocalContext.current
+    val itemName = oneItem.name
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -96,7 +97,8 @@ fun AceItemCollapsed(oneItem: AceItem) {
             //.fillMaxWidth()
         ) {
             Text(
-                text = "$oneItem.name",
+                //TODO: Change this to not require another explicit variable declaration
+                text = "$itemName",
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(5.dp)
@@ -142,12 +144,12 @@ fun CalorieCounterPreview() {
 fun populateAceItems(arrayList: ArrayList<AceItem>) {
     arrayList.add(
         AceItem(
-            "item name",
-            "appetizers",
-            100,
+            "Mozzarella Sticks",
+            "Appetizers",
+            850,
             "a link",
-            2.00,
-            "a description"
+            9.99,
+            "Six sticks, filled with gooey mozzarella cheese."
         )
     )
 }
