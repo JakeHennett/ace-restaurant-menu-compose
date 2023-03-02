@@ -71,8 +71,7 @@ fun CalorieCounterScreen() {
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            //MenuList(menuItems)
-            AceItemCollapsed(oneItem = aceItems.get(0))
+            AceItemList(items = aceItems)
         }
     }
 }
@@ -138,6 +137,16 @@ fun populateCategories(arrayList: ArrayList<String>) {
 fun CalorieCounterPreview() {
     AceRestaurantMenuComposeTheme {
         CalorieCounterScreen()
+    }
+}
+
+@Composable
+fun AceItemList(items: List<AceItem>) {
+    Column {
+        items.forEach {
+                item ->
+            AceItemCollapsed(oneItem = item)
+        }
     }
 }
 
