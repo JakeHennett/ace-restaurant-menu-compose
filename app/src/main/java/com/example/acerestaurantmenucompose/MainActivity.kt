@@ -22,6 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,6 +47,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainMenu()
 {
+    //val navController = rememberNavController() NavGraph(navController)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -153,5 +157,24 @@ fun populateMenuItems(arrayList: ArrayList<String>)
 
 fun menuItemClicked(name: String, context: Context)
 {
-    Toast.makeText(context, "$name", Toast.LENGTH_LONG).show()
+    Toast.makeText(context, "$name", Toast.LENGTH_SHORT).show()
+    //CalorieCounter()
 }
+
+/*
+fun NavGraph(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        startDestination = "login"
+    ) {
+        composable(route = "login") {
+            //call LoginScreen composable function here
+        }
+
+        composable(route = "home") {
+            //call HomeScreen composable function here
+        }
+    }
+}
+
+ */
