@@ -177,8 +177,7 @@ fun populateMenuItems(arrayList: ArrayList<String>)
 fun menuItemClicked(name: String, context: Context, navController: NavController)
 {
     Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
-    navController.navigate("calorie")
-//CalorieCounter()
+    //navController.navigate("calorie")
 }
 
 // From from https://medium.com/google-developer-experts/navigating-in-jetpack-compose-78c78d365c6a
