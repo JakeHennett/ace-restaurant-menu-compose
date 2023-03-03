@@ -22,7 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHost
+import androidx.navigation.*
+import androidx.navigation.compose.ComposeNavigator
+import androidx.navigation.compose.NamedNavArgument
 import androidx.navigation.compose.rememberNavController
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
 
@@ -46,12 +48,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainMenu()
 {
-    //val navController = rememberNavController()
+    val navController = rememberNavController()
+
+//    NavHost(navController, startDestination = "feed") {
+//        composable(route = "feed") {
+//            FeedScreen()
+//        }
+//    }
+
+    //NavHost(navController, startDestination = "feed"){}
     //NavGraph(navController)
 
 
     /*
-    val navController = rememberNavController()
     NavHost(navController, startDestination = "feed") {
         composable(route = "feed") {
             FeedScreen()
@@ -170,4 +179,25 @@ fun menuItemClicked(name: String, context: Context)
 {
     Toast.makeText(context, "$name", Toast.LENGTH_SHORT).show()
     //CalorieCounter()
+}
+
+// From from https://medium.com/google-developer-experts/navigating-in-jetpack-compose-78c78d365c6a
+// From https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:navigation/navigation-compose/src/main/java/androidx/navigation/compose/NavGraphBuilder.kt
+public fun NavGraphBuilder.composable(
+    route: String,
+    arguments: List<NamedNavArgument> = emptyList(),
+    deepLinks: List<NavDeepLink> = emptyList(),
+    content: @Composable (NavBackStackEntry) -> Unit
+) {
+    addDestination(
+        ComposeNavigator.Destination(provider[ComposeNavigator::class], content).apply {
+            this.route = route
+            arguments.forEach { (argumentName, argument) ->
+                addArgument(argumentName, argument)
+            }
+            deepLinks.forEach { deepLink ->
+                addDeepLink(deepLink)
+            }
+        }
+    )
 }
