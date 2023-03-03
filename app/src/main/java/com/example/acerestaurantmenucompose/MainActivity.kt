@@ -90,23 +90,23 @@ fun MainMenu(navController: NavController)
         ){
             val menuItems = ArrayList<String>()
             populateMenuItems(menuItems)
-            MenuList(menuItems)
+            MenuList(menuItems, navController)
         }
     }
 }
 
 @Composable
-fun MenuList(messages: List<String>) {
+fun MenuList(messages: List<String>, navController: NavController) {
     Column {
         messages.forEach {
                 message ->
-            MainMenuItem(message)
+            MainMenuItem(message, navController)
         }
     }
 }
 
 @Composable
-fun MainMenuItem(name: String)
+fun MainMenuItem(name: String, navController: NavController)
 {
     val context = LocalContext.current
     Row(
@@ -116,7 +116,7 @@ fun MainMenuItem(name: String)
             .background(Color.LightGray)
             .border(1.dp, Color.Black)
             .clickable {
-                menuItemClicked(name, context)
+                menuItemClicked(name, context, navController)
             }
     ){
         Column (
@@ -174,10 +174,11 @@ fun populateMenuItems(arrayList: ArrayList<String>)
     arrayList.add("Debug")
 }
 
-fun menuItemClicked(name: String, context: Context)
+fun menuItemClicked(name: String, context: Context, navController: NavController)
 {
     Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
-    //CalorieCounter()
+    navController.navigate("calorie")
+//CalorieCounter()
 }
 
 // From from https://medium.com/google-developer-experts/navigating-in-jetpack-compose-78c78d365c6a
