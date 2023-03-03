@@ -36,7 +36,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainMenu()
+                    //MainMenu()
+                    AceMenuApp()
                 }
             }
         }
@@ -44,9 +45,25 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainMenu()
-{
+fun AceMenuApp() {
     val navController = rememberNavController()
+    NavHost(navController, startDestination = "main") {
+        composable(route = "main") {
+            MainMenu(navController)
+        }
+        composable(route = "calorie") {
+            CalorieCounterScreen()
+        }
+//        composable(route = "adopt") {
+//            AdoptionScreen()
+//        }
+    }
+}
+
+@Composable
+fun MainMenu(navController: NavController)
+{
+//    val navController = rememberNavController()
 //    NavHost(navController, startDestination = "Calorie Counter") {
 //        composable(route = "Calorie Counter") {
 //            CalorieCounterScreen()
@@ -140,7 +157,9 @@ fun MainMenuItem(name: String)
 @Composable
 fun DefaultPreview() {
     AceRestaurantMenuComposeTheme {
-        MainMenu()
+        //AceMenuApp()
+        val navController = rememberNavController()
+        MainMenu(navController)
     }
 }
 
