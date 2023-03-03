@@ -22,6 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
 
 class CalorieCounter : ComponentActivity() {
@@ -34,7 +36,8 @@ class CalorieCounter : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    CalorieCounterScreen()
+                    val navController = rememberNavController()
+                    CalorieCounterScreen(navController)
                 }
             }
         }
@@ -42,7 +45,7 @@ class CalorieCounter : ComponentActivity() {
 }
 
 @Composable
-fun CalorieCounterScreen() {
+fun CalorieCounterScreen(navController: NavController) {
     var categories = ArrayList<String>()
     populateCategories(categories)
 
@@ -166,7 +169,8 @@ fun populateCategories(arrayList: ArrayList<String>) {
 @Composable
 fun CalorieCounterPreview() {
     AceRestaurantMenuComposeTheme {
-        CalorieCounterScreen()
+        val navController = rememberNavController()
+        CalorieCounterScreen(navController)
     }
 }
 

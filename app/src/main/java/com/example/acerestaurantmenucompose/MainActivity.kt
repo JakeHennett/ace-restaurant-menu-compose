@@ -36,7 +36,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    //MainMenu()
                     AceMenuApp()
                 }
             }
@@ -52,11 +51,8 @@ fun AceMenuApp() {
             MainMenu(navController)
         }
         composable(route = "calorie") {
-            CalorieCounterScreen()
+            CalorieCounterScreen(navController)
         }
-//        composable(route = "adopt") {
-//            AdoptionScreen()
-//        }
     }
 }
 
