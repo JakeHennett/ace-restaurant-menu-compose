@@ -77,9 +77,13 @@ fun CalorieCounterScreen() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(50.dp)
         ){
             Text(
-                text = "Total Calories"
+                text = "Total Calories",
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    //.size(30.dp)
             )
         }
     }
