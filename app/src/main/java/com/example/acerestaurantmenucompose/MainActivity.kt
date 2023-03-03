@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    AceMenuApp()
+                    Navigation()
                 }
             }
         }
@@ -44,14 +44,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AceMenuApp() {
+fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController, startDestination = "main") {
-        composable(route = "main") {
-            MainMenu(navController)
+    NavHost(navController, startDestination = Screen.MainScreen.route) {
+        composable(route = Screen.MainScreen.route){
+            MainMenu(navController = navController)
         }
-        composable(route = "calorie") {
-            CalorieCounterScreen(navController)
+        composable(route = Screen.DetailScreen.route){
+            //CalorieCounterScreen(navController = navController)
+        }
+        composable(route = Screen.CalorieCounterScreen.route){
+            CalorieCounterScreen(navController = navController)
         }
     }
 }
@@ -59,6 +62,9 @@ fun AceMenuApp() {
 @Composable
 fun MainMenu(navController: NavController)
 {
+    var mutableString by remember{
+        mutableStateOf("0")
+    }
 //    val navController = rememberNavController()
 //    NavHost(navController, startDestination = "Calorie Counter") {
 //        composable(route = "Calorie Counter") {
@@ -78,7 +84,7 @@ fun MainMenu(navController: NavController)
                 .fillMaxWidth()
         ){
             Text(
-                text = "Ace Restaurant",
+                text = "Ace Restaurant " + mutableString,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                 //.padding(20.dp)
@@ -98,8 +104,7 @@ fun MainMenu(navController: NavController)
 @Composable
 fun MenuList(messages: List<String>, navController: NavController) {
     Column {
-        messages.forEach {
-                message ->
+        messages.forEach { message ->
             MainMenuItem(message, navController)
         }
     }
@@ -153,7 +158,7 @@ fun MainMenuItem(name: String, navController: NavController)
 @Composable
 fun DefaultPreview() {
     AceRestaurantMenuComposeTheme {
-        //AceMenuApp()
+        //Navigation()
         val navController = rememberNavController()
         MainMenu(navController)
     }
@@ -177,7 +182,7 @@ fun populateMenuItems(arrayList: ArrayList<String>)
 fun menuItemClicked(name: String, context: Context, navController: NavController)
 {
     Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
-    //navController.navigate("calorie")
+    //navController.navigate(Screen.CalorieCounterScreen.route)
 }
 
 // From from https://medium.com/google-developer-experts/navigating-in-jetpack-compose-78c78d365c6a
