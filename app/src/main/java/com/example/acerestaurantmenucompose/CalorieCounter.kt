@@ -6,9 +6,8 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -36,7 +35,6 @@ class CalorieCounter : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     CalorieCounterScreen()
-                    //PlayWithFormatting("Android")
                 }
             }
         }
@@ -68,11 +66,21 @@ fun CalorieCounterScreen() {
                 //.padding(20.dp)
             )
         }
-        Box(
+        Column(
             modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .weight(1f)
                 .fillMaxWidth()
         ) {
             AceItemList(items = aceItems)
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(
+                text = "Total Calories"
+            )
         }
     }
 }
