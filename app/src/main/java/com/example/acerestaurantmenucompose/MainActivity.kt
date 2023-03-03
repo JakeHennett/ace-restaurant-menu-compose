@@ -23,7 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHost
-import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     MainMenu()
-                    //PlayWithFormatting("Android")
                 }
             }
         }
@@ -47,7 +46,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainMenu()
 {
-    //val navController = rememberNavController() NavGraph(navController)
+    //val navController = rememberNavController()
+    //NavGraph(navController)
+
+
+    /*
+    val navController = rememberNavController()
+    NavHost(navController, startDestination = "feed") {
+        composable(route = "feed") {
+            FeedScreen()
+        }
+    }
+
+     */
 
     Column(
         modifier = Modifier
@@ -160,21 +171,3 @@ fun menuItemClicked(name: String, context: Context)
     Toast.makeText(context, "$name", Toast.LENGTH_SHORT).show()
     //CalorieCounter()
 }
-
-/*
-fun NavGraph(navController: NavHostController) {
-    NavHost(
-        navController = navController,
-        startDestination = "login"
-    ) {
-        composable(route = "login") {
-            //call LoginScreen composable function here
-        }
-
-        composable(route = "home") {
-            //call HomeScreen composable function here
-        }
-    }
-}
-
- */
