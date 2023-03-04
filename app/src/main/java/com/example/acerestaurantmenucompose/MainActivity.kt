@@ -2,6 +2,7 @@ package com.example.acerestaurantmenucompose
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.*
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.NamedNavArgument
@@ -46,12 +48,13 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+    //TODO: Change this back to Screen.MainScreen before release
     NavHost(navController, startDestination = Screen.MainScreen.route) {
         composable(route = Screen.MainScreen.route){
             MainMenu(navController = navController)
         }
         composable(route = Screen.DetailScreen.route){
-            //CalorieCounterScreen(navController = navController)
+            DetailScreen()
         }
         composable(route = Screen.CalorieCounterScreen.route){
             CalorieCounterScreen(navController = navController)
@@ -62,6 +65,7 @@ fun Navigation() {
 @Composable
 fun MainMenu(navController: NavController)
 {
+    val context = LocalContext.current
     var mutableString by remember{
         mutableStateOf("0")
     }
@@ -87,6 +91,30 @@ fun MainMenu(navController: NavController)
                 text = "Ace Restaurant " + mutableString,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
+                    .clickable {
+//                        val action =
+//                        SpecifyAmountFragmentDirections
+//                            .actionSpecifyAmountFragmentToConfirmationFragment()
+//                        v.findNavController().navigate(action)
+
+                        Toast
+                            .makeText(
+                                context,
+                                navController
+                                    .findDestination(Screen.DetailScreen.route)
+                                    .toString(),
+                                Toast.LENGTH_SHORT
+                            )
+                            .show()
+                        navController.navigate(Screen.DetailScreen.route)
+
+                        //Toast.makeText(context, navController.toString(), Toast.LENGTH_SHORT).show()
+
+                        //Toast.makeText(context, Screen.DetailScreen.route, Toast.LENGTH_SHORT).show()
+                        //detail_screen
+
+                        //navController.navigate(Screen.DetailScreen.route){}
+                    }
                 //.padding(20.dp)
             )
         }
@@ -158,9 +186,13 @@ fun MainMenuItem(name: String, navController: NavController)
 @Composable
 fun DefaultPreview() {
     AceRestaurantMenuComposeTheme {
-        //Navigation()
-        val navController = rememberNavController()
-        MainMenu(navController)
+        Navigation()
+
+        //val navController = rememberNavController()
+        //MainMenu(navController)
+        //CalorieCounterScreen(navController = navController)
+
+        //DetailScreen()
     }
 }
 
@@ -182,7 +214,9 @@ fun populateMenuItems(arrayList: ArrayList<String>)
 fun menuItemClicked(name: String, context: Context, navController: NavController)
 {
     Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
-    //navController.navigate(Screen.CalorieCounterScreen.route)
+    navController.navigate(Screen.CalorieCounterScreen.route){
+        popUpTo(Screen.MainScreen.route)
+    }
 }
 
 // From from https://medium.com/google-developer-experts/navigating-in-jetpack-compose-78c78d365c6a
@@ -211,4 +245,11 @@ fun FeedScreen(navController: NavController) {
     Button(onClick = { navController.navigate("adopt") }) {
         Text("Click me to adopt!")
     }
+}
+
+@Composable
+fun DetailScreen(){
+    Text(
+        text = "Another Screen"
+    )
 }
