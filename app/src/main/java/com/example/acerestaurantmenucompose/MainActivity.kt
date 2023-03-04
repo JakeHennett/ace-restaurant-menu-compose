@@ -9,24 +9,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.*
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.ComposeNavigator
+import androidx.navigation.compose.NamedNavArgument
+import androidx.navigation.compose.rememberNavController
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -39,8 +36,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainMenu()
-                    //PlayWithFormatting("Android")
+                    Navigation()
                 }
             }
         }
@@ -48,11 +44,40 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainMenu()
+fun Navigation() {
+    val navController = rememberNavController()
+    NavHost(navController, startDestination = Screen.MainScreen.route) {
+        composable(route = Screen.MainScreen.route){
+            MainMenu(navController = navController)
+        }
+        composable(route = Screen.DetailScreen.route){
+            DetailScreen()
+        }
+        composable(route = Screen.CalorieCounterScreen.route){
+            CalorieCounterScreen(navController = navController)
+        }
+    }
+}
+
+@Composable
+fun MainMenu(navController: NavController)
 {
+    val context = LocalContext.current
+    var mutableString by remember{
+        mutableStateOf("0")
+    }
+//    val navController = rememberNavController()
+//    NavHost(navController, startDestination = "Calorie Counter") {
+//        composable(route = "Calorie Counter") {
+//            CalorieCounterScreen()
+//            //TODO: Reference Calorie Counter Screen
+//        }
+//    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = Color.Magenta)
     )
     {
         Box(
@@ -60,36 +85,46 @@ fun MainMenu()
                 .fillMaxWidth()
         ){
             Text(
-                text = "Ace Restaurant",
+                text = "Ace Restaurant " + mutableString,
+                //TODO: Remove the mutableString here after adding it for total calories
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                //.padding(20.dp)
+                    .clickable {
+                        Toast
+                            .makeText(
+                                context,
+                                navController
+                                    .findDestination(Screen.DetailScreen.route)
+                                    .toString(),
+                                Toast.LENGTH_SHORT
+                            )
+                            .show()
+                        navController.navigate(Screen.DetailScreen.route)
+                    }
             )
         }
         Box(
             modifier = Modifier
                 .fillMaxWidth()
         ){
-            var menuItems = ArrayList<String>()
-            PopulateMenuItems(menuItems)
-            MenuList(menuItems)
+            val menuItems = ArrayList<String>()
+            populateMenuItems(menuItems)
+            MenuList(menuItems, navController)
         }
     }
 }
 
 @Composable
-fun MenuList(messages: List<String>) {
+fun MenuList(messages: List<String>, navController: NavController) {
     Column {
-        messages.forEach {
-                message ->
-            //Text(text = "$message")
-            MainMenuItem("$message")
+        messages.forEach { message ->
+            MainMenuItem(message, navController)
         }
     }
 }
 
 @Composable
-fun MainMenuItem(name: String)
+fun MainMenuItem(name: String, navController: NavController)
 {
     val context = LocalContext.current
     Row(
@@ -99,7 +134,7 @@ fun MainMenuItem(name: String)
             .background(Color.LightGray)
             .border(1.dp, Color.Black)
             .clickable {
-                menuItemClicked(name, context)
+                menuItemClicked(name, context, navController)
             }
     ){
         Column (
@@ -107,15 +142,12 @@ fun MainMenuItem(name: String)
                 .align(Alignment.CenterVertically)
                 .width(330.dp)
             //TODO: replace explicit width with something dynamic
-                //.fillMaxWidth()
                 ){
             Text(
-                text = "$name",
+                text = name,
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(5.dp)
-                    //.fillMaxSize()
-                    //.fillMaxWidth()
             //TODO: Find a way to right adjust the >
             )
         }
@@ -136,11 +168,11 @@ fun MainMenuItem(name: String)
 @Composable
 fun DefaultPreview() {
     AceRestaurantMenuComposeTheme {
-        MainMenu()
+        Navigation()
     }
 }
 
-fun PopulateMenuItems(arrayList: ArrayList<String>)
+fun populateMenuItems(arrayList: ArrayList<String>)
 {
     //TODO: use this subroutine to fetch JSON from gist
     arrayList.add("Menu")
@@ -152,9 +184,48 @@ fun PopulateMenuItems(arrayList: ArrayList<String>)
     arrayList.add("Get Directions")
     arrayList.add("About Us")
     arrayList.add("Contact Us")
+    arrayList.add("Debug")
 }
 
-fun menuItemClicked(name: String, context: Context)
+fun menuItemClicked(name: String, context: Context, navController: NavController)
 {
-    Toast.makeText(context, "$name", Toast.LENGTH_LONG).show()
+    Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
+    navController.navigate(Screen.CalorieCounterScreen.route){
+        popUpTo(Screen.MainScreen.route)
+    } //TODO: Test to see if popUpTo is necessary
+}
+
+// From from https://medium.com/google-developer-experts/navigating-in-jetpack-compose-78c78d365c6a
+// From https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:navigation/navigation-compose/src/main/java/androidx/navigation/compose/NavGraphBuilder.kt
+fun NavGraphBuilder.composable(
+    route: String,
+    arguments: List<NamedNavArgument> = emptyList(),
+    deepLinks: List<NavDeepLink> = emptyList(),
+    content: @Composable (NavBackStackEntry) -> Unit
+) {
+    addDestination(
+        ComposeNavigator.Destination(provider[ComposeNavigator::class], content).apply {
+            this.route = route
+            arguments.forEach { (argumentName, argument) ->
+                addArgument(argumentName, argument)
+            }
+            deepLinks.forEach { deepLink ->
+                addDeepLink(deepLink)
+            }
+        }
+    )
+}
+
+@Composable
+fun FeedScreen(navController: NavController) {
+    Button(onClick = { navController.navigate("adopt") }) {
+        Text("Click me to adopt!")
+    }
+} //TODO: Remove this button after completing UI design. (reference)
+
+@Composable
+fun DetailScreen(){
+    Text(
+        text = "Another Screen"
+    )
 }
