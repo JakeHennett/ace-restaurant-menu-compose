@@ -2,7 +2,6 @@ package com.example.acerestaurantmenucompose
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.*
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.NamedNavArgument
@@ -48,7 +46,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    //TODO: Change this back to Screen.MainScreen before release
     NavHost(navController, startDestination = Screen.MainScreen.route) {
         composable(route = Screen.MainScreen.route){
             MainMenu(navController = navController)
@@ -89,14 +86,10 @@ fun MainMenu(navController: NavController)
         ){
             Text(
                 text = "Ace Restaurant " + mutableString,
+                //TODO: Remove the mutableString here after adding it for total calories
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .clickable {
-//                        val action =
-//                        SpecifyAmountFragmentDirections
-//                            .actionSpecifyAmountFragmentToConfirmationFragment()
-//                        v.findNavController().navigate(action)
-
                         Toast
                             .makeText(
                                 context,
@@ -107,15 +100,7 @@ fun MainMenu(navController: NavController)
                             )
                             .show()
                         navController.navigate(Screen.DetailScreen.route)
-
-                        //Toast.makeText(context, navController.toString(), Toast.LENGTH_SHORT).show()
-
-                        //Toast.makeText(context, Screen.DetailScreen.route, Toast.LENGTH_SHORT).show()
-                        //detail_screen
-
-                        //navController.navigate(Screen.DetailScreen.route){}
                     }
-                //.padding(20.dp)
             )
         }
         Box(
@@ -157,15 +142,12 @@ fun MainMenuItem(name: String, navController: NavController)
                 .align(Alignment.CenterVertically)
                 .width(330.dp)
             //TODO: replace explicit width with something dynamic
-                //.fillMaxWidth()
                 ){
             Text(
                 text = name,
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(5.dp)
-                    //.fillMaxSize()
-                    //.fillMaxWidth()
             //TODO: Find a way to right adjust the >
             )
         }
@@ -187,12 +169,6 @@ fun MainMenuItem(name: String, navController: NavController)
 fun DefaultPreview() {
     AceRestaurantMenuComposeTheme {
         Navigation()
-
-        //val navController = rememberNavController()
-        //MainMenu(navController)
-        //CalorieCounterScreen(navController = navController)
-
-        //DetailScreen()
     }
 }
 
@@ -216,7 +192,7 @@ fun menuItemClicked(name: String, context: Context, navController: NavController
     Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
     navController.navigate(Screen.CalorieCounterScreen.route){
         popUpTo(Screen.MainScreen.route)
-    }
+    } //TODO: Test to see if popUpTo is necessary
 }
 
 // From from https://medium.com/google-developer-experts/navigating-in-jetpack-compose-78c78d365c6a
@@ -245,7 +221,7 @@ fun FeedScreen(navController: NavController) {
     Button(onClick = { navController.navigate("adopt") }) {
         Text("Click me to adopt!")
     }
-}
+} //TODO: Remove this button after completing UI design. (reference)
 
 @Composable
 fun DetailScreen(){
