@@ -25,6 +25,13 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.NamedNavArgument
 import androidx.navigation.compose.rememberNavController
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
+//TODO: All of the below
+/*
+Add editable int field for total calories
+Replace x bottom on calories with -
+Build full detail menu item composable (expanded)
+Route individual buttons on main screen differently. Debug to details view
+ */
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,6 +97,7 @@ fun MainMenu(navController: NavController)
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .clickable {
+                        println(navController.findDestination(Screen.DetailScreen.route).toString())
                         Toast
                             .makeText(
                                 context,
