@@ -91,7 +91,7 @@ fun CalorieCounterScreen(navController: NavController) {
 @Composable
 fun AceItemCollapsed(oneItem: AceItem) {
     val context = LocalContext.current
-    val itemName = oneItem.name
+    //val itemName = oneItem.name
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -109,7 +109,7 @@ fun AceItemCollapsed(oneItem: AceItem) {
         ) {
             Text(
                 //TODO: Change this to not require another explicit variable declaration
-                text = "$itemName",
+                text = oneItem.name,
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(5.dp)
@@ -119,18 +119,28 @@ fun AceItemCollapsed(oneItem: AceItem) {
             )
         }
         Column {
-            Icon(
-                //TODO: Replace with minus icon if available
-                imageVector = Icons.Default.Close,
-                contentDescription = null,
+            Text(
+                text = "-",
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(5.dp)
+                    .clickable {
+                        oneItem.quantity = maxOf((oneItem.quantity - 1),0)
+                        println("Decrement " + oneItem.name + " to " + oneItem.quantity)
+                    }
             )
+//            Icon(
+//                //TODO: Replace with minus icon if available
+//                imageVector = Icons.Default.Close,
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .align(Alignment.End)
+//                    .padding(5.dp)
+//            )
         }
         Column {
             Text(
-                text = "0",
+                text = oneItem.quantity.toString(),
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(5.dp)
@@ -143,6 +153,10 @@ fun AceItemCollapsed(oneItem: AceItem) {
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(5.dp)
+                    .clickable {
+                        oneItem.quantity += 1
+                        println("Increment " + oneItem.name + " to " + oneItem.quantity)
+                    }
             )
         }
     }
