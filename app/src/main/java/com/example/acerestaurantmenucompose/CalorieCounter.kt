@@ -169,92 +169,126 @@ fun AceItemExpanded(oneItem: AceItem) {
             .border(1.dp, Color.Black)
             .height(200.dp)
     ) {
-        Row(
+        Column(
             modifier = Modifier
-        ) {
-            Column(
+                .fillMaxWidth()
+        ){
+            AceItemCollapsed(oneItem = oneItem)
+            Row(
                 modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .width(270.dp)
-                //TODO: replace explicit width with something dynamic
-                //.fillMaxWidth()
-            ) {
-                Text(
-                    //TODO: Change this to not require another explicit variable declaration
-                    text = oneItem.name,
-                    modifier = Modifier
-                        .align(Alignment.Start)
-                        .padding(5.dp)
-                    //.fillMaxSize()
-                    //.fillMaxWidth()
-                    //TODO: Find a way to right adjust the >
-                )
+                    .padding(5.dp)
+            ){
+                Column(){
+                    Text(
+                        text = "category"
+                    )
+                }
+                Column(){
+                    Text(
+                        text = "price"
+                    )
+                }
+                Column(){
+                    Text(
+                        text = "calories"
+                    )
+                }
             }
-            Column {
-                Text(
-                    text = "-",
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(5.dp)
-                        .clickable {
-                            oneItem.quantity = maxOf((oneItem.quantity - 1), 0)
-                            println("Decrement " + oneItem.name + " to " + oneItem.quantity)
-                        }
-                )
-            }
-            Column {
-                Text(
-                    text = oneItem.quantity.toString(),
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(5.dp)
-                )
-            }
-            Column {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(5.dp)
-                        .clickable {
-                            oneItem.quantity += 1
-                            println("Increment " + oneItem.name + " to " + oneItem.quantity)
-                        }
-                )
-            }
-        }
-        Row(
-            modifier = Modifier
-                .offset(0.dp, 40.dp)
-        ){
-            Column(){
-                Text(
-                    text = oneItem.category
-                )
-            }
-            Column(){
-                Text(
-                    text = "$" + oneItem.price
-                )
-            }
-            Column(){
-                Text(
-                    text = "" + oneItem.calories + " cal",
-                    //modifier = Modifier.align(Alignment.End)
-                )
-            }
-        }
-        Row(
-            modifier = Modifier
-                .offset(0.dp, 70.dp)
-        ){
-            Column(){
+            Row(
+                modifier = Modifier
+                    .padding(5.dp)
+            ){
                 Text(
                     text = oneItem.description
                 )
             }
         }
+//        Row(
+//            modifier = Modifier
+//        ) {
+//            Column(
+//                modifier = Modifier
+//                    .align(Alignment.CenterVertically)
+//                    .width(270.dp)
+//                //TODO: replace explicit width with something dynamic
+//                //.fillMaxWidth()
+//            ) {
+//                Text(
+//                    //TODO: Change this to not require another explicit variable declaration
+//                    text = oneItem.name,
+//                    modifier = Modifier
+//                        .align(Alignment.Start)
+//                        .padding(5.dp)
+//                    //.fillMaxSize()
+//                    //.fillMaxWidth()
+//                    //TODO: Find a way to right adjust the >
+//                )
+//            }
+//            Column {
+//                Text(
+//                    text = "-",
+//                    modifier = Modifier
+//                        .align(Alignment.End)
+//                        .padding(5.dp)
+//                        .clickable {
+//                            oneItem.quantity = maxOf((oneItem.quantity - 1), 0)
+//                            println("Decrement " + oneItem.name + " to " + oneItem.quantity)
+//                        }
+//                )
+//            }
+//            Column {
+//                Text(
+//                    text = oneItem.quantity.toString(),
+//                    modifier = Modifier
+//                        .align(Alignment.End)
+//                        .padding(5.dp)
+//                )
+//            }
+//            Column {
+//                Icon(
+//                    imageVector = Icons.Default.Add,
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .align(Alignment.End)
+//                        .padding(5.dp)
+//                        .clickable {
+//                            oneItem.quantity += 1
+//                            println("Increment " + oneItem.name + " to " + oneItem.quantity)
+//                        }
+//                )
+//            }
+//        }
+//        Row(
+//            modifier = Modifier
+//                .offset(0.dp, 40.dp)
+//        ){
+//            Column(){
+//                Text(
+//                    text = oneItem.category
+//                )
+//            }
+//            Column(){
+//                Text(
+//                    text = "$" + oneItem.price
+//                )
+//            }
+//            Column(){
+//                Text(
+//                    text = "" + oneItem.calories + " cal",
+//                    //modifier = Modifier.align(Alignment.End)
+//                )
+//            }
+//        }
+//        Row(
+//            modifier = Modifier
+//                .offset(0.dp, 70.dp)
+//        ){
+//            Column(){
+//                Text(
+//                    text = oneItem.description
+//                )
+//            }
+//        }
     }
 }
 
