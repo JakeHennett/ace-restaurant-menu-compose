@@ -226,7 +226,28 @@ fun AceItemExpanded(oneItem: AceItem) {
         }
         Row(
             modifier = Modifier
-                .offset(0.dp, 50.dp)
+                .offset(0.dp, 40.dp)
+        ){
+            Column(){
+                Text(
+                    text = oneItem.category
+                )
+            }
+            Column(){
+                Text(
+                    text = "$" + oneItem.price
+                )
+            }
+            Column(){
+                Text(
+                    text = "" + oneItem.calories + " cal",
+                    //modifier = Modifier.align(Alignment.End)
+                )
+            }
+        }
+        Row(
+            modifier = Modifier
+                .offset(0.dp, 70.dp)
         ){
             Column(){
                 Text(
@@ -432,7 +453,7 @@ fun populateAceItems(arrayList: ArrayList<AceItem>) {
     )
     arrayList.add(
         AceItem(
-            "Fried Oreos",
+            "Fried Oreo Cookies",
             "Desserts",
             700,
             "",
