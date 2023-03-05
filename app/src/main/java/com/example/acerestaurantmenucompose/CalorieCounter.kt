@@ -32,6 +32,22 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
 
+//data class Item(val weight: Int)
+
+private val _itemList = mutableStateListOf<AceItem>()
+val aceItemList: List<AceItem> = _itemList
+//
+//fun updateItems() {
+//    viewModelScope.launch {
+//        _itemList.addAll(itemRepository.getItems())
+//    }
+//}
+
+//fun updateOneItem(newVal:Int){
+//    val index = _itemList.indexOf(item)
+//    _itemList[index] = _itemList[index].copy(weight = newVal)
+//}
+
 @Composable
 fun CalorieCounterScreen(navController: NavController) {
     var categories = ArrayList<String>()
@@ -39,10 +55,12 @@ fun CalorieCounterScreen(navController: NavController) {
 
     var aceItems = ArrayList<AceItem>()
     populateAceItems(aceItems)
+    //populateAceItemsList(aceItemList)
 
     var totalCalorieCount by remember {
         mutableStateOf(sumCalories(aceItems))
     }
+
 
 //    val context = LocalContext.current
 //    val imageLoader = context.imageLoader
@@ -107,6 +125,7 @@ fun CalorieCounterScreen(navController: NavController) {
 @Composable
 fun AceItemCollapsed(oneItem: AceItem) {
     val context = LocalContext.current
+    var mutableQuantity by remember{mutableStateOf(oneItem.quantity)}
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -137,6 +156,7 @@ fun AceItemCollapsed(oneItem: AceItem) {
                     .padding(5.dp)
                     .clickable {
                         oneItem.quantity = maxOf((oneItem.quantity - 1), 0)
+                        mutableQuantity = oneItem.quantity
                         println("Decrement " + oneItem.name + " to " + oneItem.quantity)
                     }
             )
@@ -151,7 +171,8 @@ fun AceItemCollapsed(oneItem: AceItem) {
         }
         Column {
             Text(
-                text = oneItem.quantity.toString(),
+                //text = oneItem.quantity.toString(),
+                text = mutableQuantity.toString(),
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(5.dp)
@@ -166,6 +187,7 @@ fun AceItemCollapsed(oneItem: AceItem) {
                     .padding(5.dp)
                     .clickable {
                         oneItem.quantity += 1
+                        mutableQuantity = oneItem.quantity
                         println("Increment " + oneItem.name + " to " + oneItem.quantity)
                     }
             )
@@ -176,7 +198,6 @@ fun AceItemCollapsed(oneItem: AceItem) {
 @Composable
 fun AceItemExpanded(oneItem: AceItem) {
     val context = LocalContext.current
-    //val itemName = oneItem.name
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -228,9 +249,7 @@ fun AceItemExpanded(oneItem: AceItem) {
                     text = oneItem.description
                 )
             }
-            Box(
-                //modifier = Modifier.size(200.dp)
-            ){
+            Box(){
                 Image(
                     painterResource(R.drawable.ic_smile_background),
                     contentDescription = "",
@@ -520,14 +539,4 @@ fun sumCalories(arrayList: ArrayList<AceItem>): Int {
     }
 
     return total
-//    val myList = listOf(
-//        Activity("A", hashMapOf("day_5" to 70, "day_4" to 70)),
-//        Activity("B", hashMapOf("day_5" to 40, "day_4" to 80)),
-//    )
-//
-//    for (i in myList) {
-//        val total = i.prize.values.sum()
-//        i.prize.clear()
-//        i.prize["total"] = total
-//    }
 }
