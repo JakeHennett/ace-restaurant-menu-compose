@@ -32,7 +32,7 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
 
-var totalCalorieCount = 0
+var globalTotalCalorieCount = 0
 var aceItems = ArrayList<AceItem>()
 
 
@@ -44,8 +44,10 @@ fun CalorieCounterScreen(navController: NavController) {
     //var aceItems = ArrayList<AceItem>()
     populateAceItems(aceItems)
 
-    var totalCalorieCountMutable by remember {mutableStateOf(totalCalorieCount) }
+    //var totalCalorieCount = globalTotalCalorieCount
+    //var totalCalorieCountMutable by remember {mutableStateOf(globalTotalCalorieCount) }
     //var mutableQuantity by remember{mutableStateOf(oneItem.quantity)}
+    var localCalorieCount = sumCalories(aceItems)
 
 
 //    val context = LocalContext.current
@@ -88,24 +90,7 @@ fun CalorieCounterScreen(navController: NavController) {
         ) {
             AceItemList(items = aceItems)
         }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(70.dp)
-                .padding(10.dp)
-        ) {
-            Text(
-                text = "Total Calories",
-                modifier = Modifier
-                    .align(Alignment.End)
-                //.size(30.dp)
-            )
-            Text(
-                text = "" + totalCalorieCountMutable,
-                modifier = Modifier
-                    .align(Alignment.End)
-            )
-        }
+        TotalCaloriesDisplay()
     }
 }
 
@@ -145,6 +130,7 @@ fun AceItemCollapsed(oneItem: AceItem) {
                         oneItem.quantity = maxOf((oneItem.quantity - 1), 0)
                         mutableQuantity = oneItem.quantity
                         sumCalories()
+                        println(globalTotalCalorieCount)
                         println("Decrement " + oneItem.name + " to " + oneItem.quantity)
                     }
             )
@@ -177,6 +163,7 @@ fun AceItemCollapsed(oneItem: AceItem) {
                         oneItem.quantity += 1
                         mutableQuantity = oneItem.quantity
                         sumCalories()
+                        println("global " + globalTotalCalorieCount)
                         println("Increment " + oneItem.name + " to " + oneItem.quantity)
                     }
             )
@@ -533,16 +520,47 @@ fun sumCalories(arrayList: ArrayList<AceItem>): Int {
 fun sumCalories(): Int {
     //TODO: Do something to avoid this abomination of a method
     //var total = 0
-    totalCalorieCount = 0
+    globalTotalCalorieCount = 0
 
     for (i in aceItems) {
-        totalCalorieCount += (i.calories * i.quantity)
+        globalTotalCalorieCount += (i.calories * i.quantity)
         println(
             " calories: " + i.calories +
                     " quantity: " + i.quantity +
-                    " total: " + totalCalorieCount
+                    " total: " + globalTotalCalorieCount
         )
     }
 
-    return totalCalorieCount
+    return globalTotalCalorieCount
+}
+
+//fun AceItemCollapsed(oneItem: AceItem) {
+//    val context = LocalContext.current
+//    var mutableQuantity by remember{mutableStateOf(oneItem.quantity)}
+@Composable
+fun TotalCaloriesDisplay (){
+    //var localTotalCalorieCount = sumCalories(arrayList)
+    var mutableTotal by remember {mutableStateOf(globalTotalCalorieCount) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(70.dp)
+            .padding(10.dp)
+            .clickable {
+                mutableTotal = sumCalories()
+            }
+    ) {
+        Text(
+            text = "Total Calories (tap to refresh)",
+            modifier = Modifier
+                .align(Alignment.End)
+            //.size(30.dp)
+        )
+        Text(
+            text = "" + mutableTotal,
+            modifier = Modifier
+                .align(Alignment.End)
+        )
+    }
 }
