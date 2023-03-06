@@ -32,34 +32,20 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
 
-//data class Item(val weight: Int)
+var totalCalorieCount = 0
+var aceItems = ArrayList<AceItem>()
 
-private val _itemList = mutableStateListOf<AceItem>()
-val aceItemList: List<AceItem> = _itemList
-//
-//fun updateItems() {
-//    viewModelScope.launch {
-//        _itemList.addAll(itemRepository.getItems())
-//    }
-//}
-
-//fun updateOneItem(newVal:Int){
-//    val index = _itemList.indexOf(item)
-//    _itemList[index] = _itemList[index].copy(weight = newVal)
-//}
 
 @Composable
 fun CalorieCounterScreen(navController: NavController) {
     var categories = ArrayList<String>()
     populateCategories(categories)
 
-    var aceItems = ArrayList<AceItem>()
+    //var aceItems = ArrayList<AceItem>()
     populateAceItems(aceItems)
-    //populateAceItemsList(aceItemList)
 
-    var totalCalorieCount by remember {
-        mutableStateOf(sumCalories(aceItems))
-    }
+    var totalCalorieCountMutable by remember {mutableStateOf(totalCalorieCount) }
+    //var mutableQuantity by remember{mutableStateOf(oneItem.quantity)}
 
 
 //    val context = LocalContext.current
@@ -87,7 +73,8 @@ fun CalorieCounterScreen(navController: NavController) {
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .clickable {
-                        sumCalories(aceItems)
+                        //sumCalories(aceItems)
+                        sumCalories()
                     }
                 //.padding(20.dp)
             )
@@ -114,7 +101,7 @@ fun CalorieCounterScreen(navController: NavController) {
                 //.size(30.dp)
             )
             Text(
-                text = totalCalorieCount.toString(),
+                text = "" + totalCalorieCountMutable,
                 modifier = Modifier
                     .align(Alignment.End)
             )
@@ -157,6 +144,7 @@ fun AceItemCollapsed(oneItem: AceItem) {
                     .clickable {
                         oneItem.quantity = maxOf((oneItem.quantity - 1), 0)
                         mutableQuantity = oneItem.quantity
+                        sumCalories()
                         println("Decrement " + oneItem.name + " to " + oneItem.quantity)
                     }
             )
@@ -188,6 +176,7 @@ fun AceItemCollapsed(oneItem: AceItem) {
                     .clickable {
                         oneItem.quantity += 1
                         mutableQuantity = oneItem.quantity
+                        sumCalories()
                         println("Increment " + oneItem.name + " to " + oneItem.quantity)
                     }
             )
@@ -312,7 +301,7 @@ fun populateAceItems(arrayList: ArrayList<AceItem>) {
             "https://gist.github.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857?permalink_comment_id=4473116#gistcomment-4473116",
             9.99,
             "Six sticks, filled with gooey mozzarella cheese.",
-            3
+            0
         )
     )
     arrayList.add(
@@ -539,4 +528,21 @@ fun sumCalories(arrayList: ArrayList<AceItem>): Int {
     }
 
     return total
+}
+
+fun sumCalories(): Int {
+    //TODO: Do something to avoid this abomination of a method
+    //var total = 0
+    totalCalorieCount = 0
+
+    for (i in aceItems) {
+        totalCalorieCount += (i.calories * i.quantity)
+        println(
+            " calories: " + i.calories +
+                    " quantity: " + i.quantity +
+                    " total: " + totalCalorieCount
+        )
+    }
+
+    return totalCalorieCount
 }
