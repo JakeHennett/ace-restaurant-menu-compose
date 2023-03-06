@@ -70,9 +70,6 @@ fun Navigation() {
 fun MainMenu(navController: NavController)
 {
     val context = LocalContext.current
-    var mutableString by remember{
-        mutableStateOf("0")
-    }
 //    val navController = rememberNavController()
 //    NavHost(navController, startDestination = "Calorie Counter") {
 //        composable(route = "Calorie Counter") {
@@ -92,7 +89,7 @@ fun MainMenu(navController: NavController)
                 .fillMaxWidth()
         ){
             Text(
-                text = "Ace Restaurant " + mutableString,
+                text = "Ace Restaurant",
                 //TODO: Remove the mutableString here after adding it for total calories
                 modifier = Modifier
                     .align(Alignment.TopCenter)
