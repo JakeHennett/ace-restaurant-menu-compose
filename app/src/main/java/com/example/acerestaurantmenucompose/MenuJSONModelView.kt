@@ -18,3 +18,13 @@ class menuJSONViewModel: ViewModel(){
     }
 
 }
+
+//Example Use
+//class mActiviry: AppCompatActivity(){
+//    val vm by viewmodels<mViewModel>() //See docs for better approaches of initialisation
+//
+////...
+//    setContent {
+//        Text(vm.data)
+//    }
+//}
