@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Ace Restaurant Menu Compose</string>
+    <string name="menu_gist_url">https://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/menu.jsonhttps://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/menu.json</string>
 </resources>

@@ -31,6 +31,7 @@ import coil.compose.AsyncImage
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
+import java.net.URL
 
 var globalTotalCalorieCount = 0
 var aceItems = ArrayList<AceItem>()
@@ -242,6 +243,10 @@ fun AceItemList(items: List<AceItem>) {
 }
 
 fun populateAceItems(arrayList: ArrayList<AceItem>) {
+    println("Reading from https://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/menu.json")
+    //val vm by viewmodels<menuJSONViewModel>()
+    //val apiResponse = URL("https://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/menu.json").readText()
+    //println(apiResponse.toString())
     arrayList.add(
         AceItem(
             "Mozzarella Sticks",
