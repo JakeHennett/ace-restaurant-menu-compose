@@ -1,7 +1,9 @@
 package com.example.acerestaurantmenucompose
 
+import android.app.DownloadManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -244,6 +246,16 @@ fun AceItemList(items: List<AceItem>) {
 
 fun populateAceItems(arrayList: ArrayList<AceItem>) {
     println("Reading from https://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/menu.json")
+
+    //Anko routine
+//    async {
+//        val result = URL("<api call>").readText()
+//        uiThread {
+//            Log.d("Request", result)
+//            longToast("Request performed")
+//        }
+//    }
+
     //val vm by viewmodels<menuJSONViewModel>()
     //val apiResponse = URL("https://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/menu.json").readText()
     //println(apiResponse.toString())
@@ -526,4 +538,26 @@ fun TotalCaloriesDisplay (){
                 .align(Alignment.End)
         )
     }
+}
+
+fun run(url: String) {
+//    val request = Request.Builder()
+//        .url(url)
+//        .build()
+//
+//    client.newCall(request).enqueue(object : Callback {
+//        override fun onFailure(call: Call, e: IOException) {}
+//        override fun onResponse(call: Call, response: Response) = println(response.body()?.string())
+//    })
+}
+
+fun ankoRead(){
+    //TODO: Figure out how to import these
+//    async {
+//        val result = URL("<api call>").readText()
+//        uiThread {
+//            Log.d("Request", result)
+//            longToast("Request performed")
+//        }
+//    }
 }
