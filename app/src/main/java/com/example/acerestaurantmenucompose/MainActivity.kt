@@ -88,6 +88,9 @@ fun Navigation() {
         composable(route = Screen.CalorieCounterScreen.route){
             CalorieCounterScreen(navController = navController)
         }
+        composable(route = Screen.ApiTestScreen.route){
+            ApiTestScreen()
+        }
     }
 }
 
@@ -270,6 +273,20 @@ data class UserModel(
     var profile: ProfileModel
 )
 
+data class MenuItemModel(
+    val name: String,
+    val category: String,
+    val calories: Int,
+    val picture: String,
+    val price: Double,
+    val description: String,
+    var quantity: Int
+)
+
+data class MenuModel(
+    var menuList: ArrayList<MenuItemModel>
+)
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ApiTestScreen() {
@@ -371,4 +388,32 @@ fun sendRequest(
             Log.e("Main", "Failed mate " + t.message.toString())
         }
     })
+}
+
+fun sendRequestAce(
+    id: String,
+    menuItemState: MutableState<MenuItemModel>
+) {
+    val retrofit = Retrofit.Builder()
+        .baseUrl(R.string.menu_gist_url.toString())
+        //TODO: Make sure this is the actual URL value. Also, maybe make a subcategory of URL under R.string
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val api = retrofit.create(UserApi::class.java)
+
+//    val call: Call<MenuModel?>? = api.getUserById(id);
+//
+//    call!!.enqueue(object: Callback<UserModel?> {
+//        override fun onResponse(call: Call<UserModel?>, response: Response<UserModel?>) {
+//            if(response.isSuccessful) {
+//                Log.d("Main", "success!" + response.body().toString())
+//                profileState.value = response.body()!!.profile
+//            }
+//        }
+//
+//        override fun onFailure(call: Call<UserModel?>, t: Throwable) {
+//            Log.e("Main", "Failed mate " + t.message.toString())
+//        }
+//    })
 }
