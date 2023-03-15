@@ -1,7 +1,9 @@
 package com.example.acerestaurantmenucompose
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,28 +19,51 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.NamedNavArgument
 import androidx.navigation.compose.rememberNavController
 import com.example.acerestaurantmenucompose.ui.theme.AceRestaurantMenuComposeTheme
+import com.example.acerestaurantmenucompose.ui.theme.Purple700
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 //TODO: All of the below
 /*
-Add editable int field for total calories
-Replace x bottom on calories with -
-Build full detail menu item composable (expanded)
+Pull menu items from gist json
+Rework - button on calorie counter to look closer to + button
+Alternatively, import full icon list to support - icon
+Add image resources for each menu item.
+Properly display image on menu item expanded
+Replace boxes with cards where appropriate
+Utilize viewmodels to leverage modular design
 Route individual buttons on main screen differently. Debug to details view
+
+Useful Design links
+https://paulallies.medium.com/jetpack-compose-api-data-to-list-view-35cb5ea66a95
+https://dev.to/ethand91/android-jetpack-compose-api-tutorial-1kh5
  */
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        //TODO: Declare viewmodel object instance here
+        //val vm = MyViewModel()
         super.onCreate(savedInstanceState)
         setContent {
             AceRestaurantMenuComposeTheme {
                 // A surface container using the 'background' color from the theme
+                //TODO: Convert main screen to accept a viewmodel parameter
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
@@ -233,4 +258,117 @@ fun DetailScreen(){
     Text(
         text = "Another Screen"
     )
+}
+
+data class ProfileModel(
+    var age: String,
+    var name: String,
+    var email: String,
+)
+
+data class UserModel(
+    var profile: ProfileModel
+)
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+fun ApiTestScreen() {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                backgroundColor = Purple700,
+                title = {
+                    Text(
+                        text = "Simple API Request",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        color = Color.White
+                    )
+                }
+            )
+        },
+        content = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val id = remember {
+                    mutableStateOf(TextFieldValue())
+                }
+
+                val profile = remember {
+                    mutableStateOf(ProfileModel(
+                        age = "",
+                        name = "",
+                        email = ""
+                    ))
+                }
+
+                Text(
+                    text="API Sample",
+                    style= TextStyle(
+                        fontSize = 40.sp,
+                        fontFamily = FontFamily.Cursive
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                TextField(
+                    label = { Text(text = "User ID")},
+                    value = id.value,
+                    onValueChange = { id.value = it }
+                )
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
+                    Button(
+                        onClick = {
+                            val data = sendRequest(
+                                id = id.value.text,
+                                profileState = profile
+                            )
+
+                            Log.d("Main Activity", profile.toString())
+                        }
+                    ) {
+                        Text(text = "Get Data")
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Text(text = profile.component1().toString(), fontSize = 40.sp)
+            }
+        }
+    )
+}
+
+fun sendRequest(
+    id: String,
+    profileState: MutableState<ProfileModel>
+) {
+    val retrofit = Retrofit.Builder()
+        .baseUrl("http://192.168.0.109:3000")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val api = retrofit.create(UserApi::class.java)
+
+    val call: Call<UserModel?>? = api.getUserById(id);
+
+    call!!.enqueue(object: Callback<UserModel?> {
+        override fun onResponse(call: Call<UserModel?>, response: Response<UserModel?>) {
+            if(response.isSuccessful) {
+                Log.d("Main", "success!" + response.body().toString())
+                profileState.value = response.body()!!.profile
+            }
+        }
+
+        override fun onFailure(call: Call<UserModel?>, t: Throwable) {
+            Log.e("Main", "Failed mate " + t.message.toString())
+        }
+    })
 }
