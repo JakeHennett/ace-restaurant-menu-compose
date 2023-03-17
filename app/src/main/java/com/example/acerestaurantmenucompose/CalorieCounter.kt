@@ -41,6 +41,7 @@ var categories = ArrayList<String>()
 
 @Composable
 fun CalorieCounterScreen(navController: NavController) {
+    //Base screen for displaying calorie counter functionality
     populateCategories(categories)
     populateAceItems(aceItems)
 
@@ -79,6 +80,7 @@ fun CalorieCounterScreen(navController: NavController) {
 
 @Composable
 fun AceItemCollapsed(oneItem: AceItem) {
+    //Menu item with most details removed
     val context = LocalContext.current
     var mutableQuantity by remember{mutableStateOf(oneItem.quantity)}
     Row(
@@ -154,6 +156,7 @@ fun AceItemCollapsed(oneItem: AceItem) {
 
 @Composable
 fun AceItemExpanded(oneItem: AceItem) {
+    //Menu item with all details visible
     val context = LocalContext.current
     Box(
         modifier = Modifier
@@ -219,7 +222,7 @@ fun AceItemExpanded(oneItem: AceItem) {
 }
 
 fun populateCategories(arrayList: ArrayList<String>) {
-    //TODO: use this subroutine to fetch JSON from gist
+    //TODO: use this subroutine to fetch JSON from gist from R.string.menu_gist_url
     arrayList.add("Appetizers")
     arrayList.add("Entrees")
     arrayList.add("Sides")
@@ -237,6 +240,7 @@ fun CalorieCounterPreview() {
 
 @Composable
 fun AceItemList(items: List<AceItem>) {
+    //Render all items as composables from a provided list
     Column {
         items.forEach { item ->
             AceItemExpanded(oneItem = item)
@@ -245,20 +249,9 @@ fun AceItemList(items: List<AceItem>) {
 }
 
 fun populateAceItems(arrayList: ArrayList<AceItem>) {
+    //Hard code all menu items until http request can be implemented
     println("Reading from https://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/menu.json")
 
-    //Anko routine
-//    async {
-//        val result = URL("<api call>").readText()
-//        uiThread {
-//            Log.d("Request", result)
-//            longToast("Request performed")
-//        }
-//    }
-
-    //val vm by viewmodels<menuJSONViewModel>()
-    //val apiResponse = URL("https://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/menu.json").readText()
-    //println(apiResponse.toString())
     arrayList.add(
         AceItem(
             "Mozzarella Sticks",
@@ -482,6 +475,7 @@ data class AceItem(
 )
 
 fun sumCalories(arrayList: ArrayList<AceItem>): Int {
+    //calculate total calorie value from a provided list
     var total = 0
 
     for (i in arrayList) {
@@ -497,6 +491,7 @@ fun sumCalories(arrayList: ArrayList<AceItem>): Int {
 }
 
 fun sumCalories(): Int {
+    //calculate total calorie value from global list
     //TODO: Do something to avoid this abomination of a method
     globalTotalCalorieCount = 0
 
@@ -538,26 +533,4 @@ fun TotalCaloriesDisplay (){
                 .align(Alignment.End)
         )
     }
-}
-
-fun run(url: String) {
-//    val request = Request.Builder()
-//        .url(url)
-//        .build()
-//
-//    client.newCall(request).enqueue(object : Callback {
-//        override fun onFailure(call: Call, e: IOException) {}
-//        override fun onResponse(call: Call, response: Response) = println(response.body()?.string())
-//    })
-}
-
-fun ankoRead(){
-    //TODO: Figure out how to import these
-//    async {
-//        val result = URL("<api call>").readText()
-//        uiThread {
-//            Log.d("Request", result)
-//            longToast("Request performed")
-//        }
-//    }
 }

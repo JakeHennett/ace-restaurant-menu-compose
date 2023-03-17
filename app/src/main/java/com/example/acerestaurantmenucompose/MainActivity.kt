@@ -53,21 +53,24 @@ Route individual buttons on main screen differently. Debug to details view
 Useful Design links
 https://paulallies.medium.com/jetpack-compose-api-data-to-list-view-35cb5ea66a95
 https://dev.to/ethand91/android-jetpack-compose-api-tutorial-1kh5
+https://medium.com/google-developer-experts/navigating-in-jetpack-compose-78c78d365c6a
+https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:navigation/navigation-compose/src/main/java/androidx/navigation/compose/NavGraphBuilder.kt
  */
 
 class MainActivity : ComponentActivity() {
+    //Main activity where control begins
     override fun onCreate(savedInstanceState: Bundle?) {
         //TODO: Declare viewmodel object instance here
         //val vm = MyViewModel()
         super.onCreate(savedInstanceState)
         setContent {
             AceRestaurantMenuComposeTheme {
-                // A surface container using the 'background' color from the theme
                 //TODO: Convert main screen to accept a viewmodel parameter
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    //Call into the composable that declares navigation and routes to individual screens
                     Navigation()
                 }
             }
@@ -77,18 +80,21 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Navigation() {
+    //Establish a navigation controller and define individual routes
     val navController = rememberNavController()
     NavHost(navController, startDestination = Screen.MainScreen.route) {
         composable(route = Screen.MainScreen.route){
             MainMenu(navController = navController)
         }
         composable(route = Screen.DetailScreen.route){
+            //Unused screen for navigation troubleshooting
             DetailScreen()
         }
         composable(route = Screen.CalorieCounterScreen.route){
             CalorieCounterScreen(navController = navController)
         }
         composable(route = Screen.ApiTestScreen.route){
+            //Unimplemented screen for API testing
             ApiTestScreen()
         }
     }
@@ -97,14 +103,8 @@ fun Navigation() {
 @Composable
 fun MainMenu(navController: NavController)
 {
+    //Main menu screen to display when the app is launched
     val context = LocalContext.current
-//    val navController = rememberNavController()
-//    NavHost(navController, startDestination = "Calorie Counter") {
-//        composable(route = "Calorie Counter") {
-//            CalorieCounterScreen()
-//            //TODO: Reference Calorie Counter Screen
-//        }
-//    }
 
     Column(
         modifier = Modifier
@@ -118,7 +118,6 @@ fun MainMenu(navController: NavController)
         ){
             Text(
                 text = "Ace Restaurant",
-                //TODO: Remove the mutableString here after adding it for total calories
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .clickable {
@@ -149,6 +148,7 @@ fun MainMenu(navController: NavController)
 
 @Composable
 fun MenuList(messages: List<String>, navController: NavController) {
+    //Composable that renders individual screen components for each item in the provided list
     Column {
         messages.forEach { message ->
             MainMenuItem(message, navController)
@@ -159,6 +159,7 @@ fun MenuList(messages: List<String>, navController: NavController) {
 @Composable
 fun MainMenuItem(name: String, navController: NavController)
 {
+    //Individual menu item component
     val context = LocalContext.current
     Row(
         modifier = Modifier
@@ -207,7 +208,7 @@ fun DefaultPreview() {
 
 fun populateMenuItems(arrayList: ArrayList<String>)
 {
-    //TODO: use this subroutine to fetch JSON from gist
+    //TODO: use this subroutine to fetch JSON from gist from R.string.menu_gist_url
     arrayList.add("Menu")
     arrayList.add("Online Ordering")
     arrayList.add("Calorie Counter")
@@ -222,14 +223,13 @@ fun populateMenuItems(arrayList: ArrayList<String>)
 
 fun menuItemClicked(name: String, context: Context, navController: NavController)
 {
+    //Navigate to a particular screen when that menu item is pressed
     Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
     navController.navigate(Screen.CalorieCounterScreen.route){
         popUpTo(Screen.MainScreen.route)
-    } //TODO: Test to see if popUpTo is necessary
+    }
 }
 
-// From from https://medium.com/google-developer-experts/navigating-in-jetpack-compose-78c78d365c6a
-// From https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:navigation/navigation-compose/src/main/java/androidx/navigation/compose/NavGraphBuilder.kt
 fun NavGraphBuilder.composable(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
@@ -258,162 +258,8 @@ fun FeedScreen(navController: NavController) {
 
 @Composable
 fun DetailScreen(){
+    //Simple screen for navigation troubleshooting
     Text(
         text = "Another Screen"
     )
-}
-
-data class ProfileModel(
-    var age: String,
-    var name: String,
-    var email: String,
-)
-
-data class UserModel(
-    var profile: ProfileModel
-)
-
-data class MenuItemModel(
-    val name: String,
-    val category: String,
-    val calories: Int,
-    val picture: String,
-    val price: Double,
-    val description: String,
-    var quantity: Int
-)
-
-data class MenuModel(
-    var menuList: ArrayList<MenuItemModel>
-)
-
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Composable
-fun ApiTestScreen() {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                backgroundColor = Purple700,
-                title = {
-                    Text(
-                        text = "Simple API Request",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        color = Color.White
-                    )
-                }
-            )
-        },
-        content = {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                val id = remember {
-                    mutableStateOf(TextFieldValue())
-                }
-
-                val profile = remember {
-                    mutableStateOf(ProfileModel(
-                        age = "",
-                        name = "",
-                        email = ""
-                    ))
-                }
-
-                Text(
-                    text="API Sample",
-                    style= TextStyle(
-                        fontSize = 40.sp,
-                        fontFamily = FontFamily.Cursive
-                    )
-                )
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-                TextField(
-                    label = { Text(text = "User ID")},
-                    value = id.value,
-                    onValueChange = { id.value = it }
-                )
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-                Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-                    Button(
-                        onClick = {
-                            val data = sendRequest(
-                                id = id.value.text,
-                                profileState = profile
-                            )
-
-                            Log.d("Main Activity", profile.toString())
-                        }
-                    ) {
-                        Text(text = "Get Data")
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-                Text(text = profile.component1().toString(), fontSize = 40.sp)
-            }
-        }
-    )
-}
-
-fun sendRequest(
-    id: String,
-    profileState: MutableState<ProfileModel>
-) {
-    val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.0.109:3000")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    val api = retrofit.create(UserApi::class.java)
-
-    val call: Call<UserModel?>? = api.getUserById(id);
-
-    call!!.enqueue(object: Callback<UserModel?> {
-        override fun onResponse(call: Call<UserModel?>, response: Response<UserModel?>) {
-            if(response.isSuccessful) {
-                Log.d("Main", "success!" + response.body().toString())
-                profileState.value = response.body()!!.profile
-            }
-        }
-
-        override fun onFailure(call: Call<UserModel?>, t: Throwable) {
-            Log.e("Main", "Failed mate " + t.message.toString())
-        }
-    })
-}
-
-fun sendRequestAce(
-    id: String,
-    menuItemState: MutableState<MenuItemModel>
-) {
-    val retrofit = Retrofit.Builder()
-        .baseUrl(R.string.menu_gist_url.toString())
-        //TODO: Make sure this is the actual URL value. Also, maybe make a subcategory of URL under R.string
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    val api = retrofit.create(UserApi::class.java)
-
-//    val call: Call<MenuModel?>? = api.getUserById(id);
-//
-//    call!!.enqueue(object: Callback<UserModel?> {
-//        override fun onResponse(call: Call<UserModel?>, response: Response<UserModel?>) {
-//            if(response.isSuccessful) {
-//                Log.d("Main", "success!" + response.body().toString())
-//                profileState.value = response.body()!!.profile
-//            }
-//        }
-//
-//        override fun onFailure(call: Call<UserModel?>, t: Throwable) {
-//            Log.e("Main", "Failed mate " + t.message.toString())
-//        }
-//    })
 }
