@@ -113,7 +113,7 @@ fun ApiTestScreen() {
                                 id = id.value.text,
                                 profileState = profile
                             )
-
+                            println(data)
                             Log.d("Main Activity", profile.toString())
                         }
                     ) {
@@ -141,7 +141,7 @@ fun sendRequest(
 
     val api = retrofit.create(UserApi::class.java)
 
-    val call: Call<UserModel?>? = api.getUserById(id);
+    val call: Call<UserModel?>? = api.getUserById(id)
 
     call!!.enqueue(object: Callback<UserModel?> {
         override fun onResponse(call: Call<UserModel?>, response: Response<UserModel?>) {
@@ -158,8 +158,7 @@ fun sendRequest(
 }
 
 fun sendRequestAce(
-    id: String,
-    menuItemState: MutableState<MenuItemModel>
+    //menuItemState: MutableState<MenuItemModel>
 ) {
     //implemented API function
     val retrofit = Retrofit.Builder()
@@ -170,8 +169,28 @@ fun sendRequestAce(
 
     val api = retrofit.create(UserApi::class.java)
 
-//    val call: Call<MenuModel?>? = api.getUserById(id);
-//
+    val call: Call<MenuModel?>? = api.getMenuList()
+    println(call.toString())
+
+        call!!.enqueue(object: Callback<MenuModel?> {
+        override fun onResponse(call: Call<MenuModel?>, response: Response<MenuModel?>) {
+            if(response.isSuccessful) {
+                Log.d("Main", "success!" + response.body().toString())
+                println("success!" + response.body().toString())
+                //menuItemState.value = response.body()!!.toString()
+            }
+            else
+            {
+                println("We tried")
+            }
+        }
+
+        override fun onFailure(call: Call<MenuModel?>, t: Throwable) {
+            Log.e("Main", "Failed mate " + t.message.toString())
+        }
+    })
+
+
 //    call!!.enqueue(object: Callback<UserModel?> {
 //        override fun onResponse(call: Call<UserModel?>, response: Response<UserModel?>) {
 //            if(response.isSuccessful) {

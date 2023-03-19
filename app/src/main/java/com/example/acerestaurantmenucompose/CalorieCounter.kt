@@ -44,6 +44,7 @@ fun CalorieCounterScreen(navController: NavController) {
     //Base screen for displaying calorie counter functionality
     populateCategories(categories)
     populateAceItems(aceItems)
+    sendRequestAce()    //calls new API endpoint
 
     Column(
         modifier = Modifier
@@ -209,7 +210,7 @@ fun AceItemExpanded(oneItem: AceItem) {
                     text = oneItem.description
                 )
             }
-            Box(){
+            Box{
                 Image(
                     painterResource(R.drawable.ic_smile_background),
                     contentDescription = "",
@@ -240,7 +241,7 @@ fun CalorieCounterPreview() {
 
 @Composable
 fun AceItemList(items: List<AceItem>) {
-    //Render all items as composables from a provided list
+    //Render all items as composable from a provided list
     Column {
         items.forEach { item ->
             AceItemExpanded(oneItem = item)
