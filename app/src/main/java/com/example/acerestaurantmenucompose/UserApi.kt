@@ -16,6 +16,6 @@ public interface UserApi {
     @GET("users/{id}")
     abstract fun getUserById(@Path("id") id: String): Call<UserModel?>?
 
-    @GET("")
+    @GET("menu.json")
     abstract fun getMenuList(): Call<MenuModel?>?
 }

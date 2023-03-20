@@ -161,8 +161,10 @@ fun sendRequestAce(
     //menuItemState: MutableState<MenuItemModel>
 ) {
     //implemented API function
+    val url = "https://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/"
+    println(url)
     val retrofit = Retrofit.Builder()
-        .baseUrl(R.string.menu_gist_url.toString())
+        .baseUrl(url)
         //TODO: Make sure this is the actual URL value. Also, maybe make a subcategory of URL under R.string
         .addConverterFactory(GsonConverterFactory.create())
         .build()

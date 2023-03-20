@@ -44,6 +44,9 @@ fun CalorieCounterScreen(navController: NavController) {
     //Base screen for displaying calorie counter functionality
     populateCategories(categories)
     populateAceItems(aceItems)
+    println(R.string.menu_gist_url.toString())
+    println("about to call sendRequestAce()")
+    println("https://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/menu.jsonhttps://gist.githubusercontent.com/JakeHennett/18d375fb14faaf9a000c1410ed4e8857/raw/269160dc6491c8769e995a8fd455e5ac292f3ffd/menu.json")
     sendRequestAce()    //calls new API endpoint
 
     Column(
